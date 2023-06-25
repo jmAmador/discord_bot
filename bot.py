@@ -13,8 +13,10 @@ async def send_message(message, user_message, is_private):
 
 
 def run_discord_bot():
-    TOKEN = 'YOUR_KEY'
-    client = discord.Client()
+    TOKEN = 'MTEyMjU2Nzk0ODUxMTQ5MDEyOA.G80e3I.Fk60hlCqkgD9jreJczSjPwANQEnkYT5wiiD660'
+    intents = discord.Intents.default()
+    intents.message_content = True
+    client = discord.Client(intents=intents)
 
     @client.event
     async def on_ready():
@@ -38,8 +40,12 @@ def run_discord_bot():
         if user_message[0] == '?':
             user_message = user_message[1:]  # [1:] Removes the '?'
             await send_message(message, user_message, is_private=True)
+            await bot.process_commands(message)
         else:
             await send_message(message, user_message, is_private=False)
+            await bot.process_commands(message)
+
+
 
     # Remember to run your bot with your personal TOKEN
     client.run(TOKEN)
